@@ -11,9 +11,10 @@ from nfstream import NFStreamer
 def main(pcap_path, csv_path):
     streamer = NFStreamer(
         source=pcap_path,  # PCAP file (Ethernet format)
-        statistical_analysis=True,  # +48 statistical features (packet size, IAT, TCP flags)
-        idle_timeout=120,  # flow is closed if no packet for 120 seconds (default)
-        active_timeout=1800,  # long flow is cut every 1800 seconds (default)
+        statistical_analysis=True,  # Post-Mortem Statistical Features
+        n_dissections=255, # NFlow Layer-7 Visibility Features
+        idle_timeout=120,  # Flow is closed if no packet for 120 seconds (default)
+        active_timeout=1800,  # Long flow is cut every 1800 seconds (default)
     )
     df = streamer.to_pandas()
     if df is None or len(df) == 0:
